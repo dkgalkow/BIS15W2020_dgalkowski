@@ -141,7 +141,6 @@ mean(roulette, na.rm = TRUE)
 mean(blackjack, na.rm = TRUE) > mean(roulette, na.rm = TRUE)
 ```
 
-
 on average we made more playing blackjack. 
 
 ## Push your final code to [GitHub](https://github.com/FRS417-DataScienceBiologists)
