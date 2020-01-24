@@ -114,7 +114,11 @@ filter(sleep, sleep_total>=18)
 sleep[43,6]
 sleep[43,]
 ```
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 6abfb8a3d543be4781ca7ff1710e1288c2ec64c3
 
 #rows 20,22,37,43,62 => North American Opossum, Big Brown Bat, Thick-tailed Opposum, Little Brown Bat, and Giant Armadillo.
 #=====> all sleep more then 18 hours per day on average.   
