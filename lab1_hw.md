@@ -10,10 +10,8 @@ output:
     toc: no
 ---
 
-
-
 ## Instructions
-Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code, keep track of your versions using git, and push your final work to our [GitHub repository](https://github.com/FRS417-DataScienceBiologists). I will randomly select a few examples of student work at the start of each session to use as examples so be sure that your code is working to the best of your ability.  
+Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to your repository. Your final lab report should be organized, clean, and run free from errors. Remember, you must remove the `#` for the included code chunks to run.  
 
 1. Navigate to the R console and calculate the following expressions.  
   + 5 - 3 * 2    = -1
@@ -26,6 +24,7 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 ```
 ## [1] -1
 ```
+
 
 ```r
 8/2**2
@@ -45,6 +44,7 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 ```
 ## [1] 4
 ```
+
 
 ```r
 (8/2)**2
@@ -86,6 +86,7 @@ is.integer(pi)
 ## [1] FALSE
 ```
 
+
 ```r
 class(pi)
 ```
@@ -93,6 +94,7 @@ class(pi)
 ```
 ## [1] "numeric"
 ```
+
 
 ```r
 my_missing <- NA
@@ -155,6 +157,7 @@ e. Build a `total_week` vector to show how much you lost or won on each day over
 ```r
 total_week <- c(blackjack+roulette)
 ```
+
 
 ```r
 total_week[1]
@@ -232,6 +235,7 @@ sum(roulette, na.rm = TRUE)
 ## [1] -60
 ```
 
+
 ```r
 blackjack>=roulette
 ```
@@ -267,6 +271,7 @@ mean(blackjack, na.rm = TRUE)
 ## [1] 62
 ```
 
+
 ```r
 mean(roulette, na.rm = TRUE)
 ```
@@ -274,6 +279,7 @@ mean(roulette, na.rm = TRUE)
 ```
 ## [1] -12
 ```
+
 
 ```r
 mean(blackjack, na.rm = TRUE) > mean(roulette, na.rm = TRUE)
@@ -285,4 +291,5 @@ mean(blackjack, na.rm = TRUE) > mean(roulette, na.rm = TRUE)
 
 on average we made more playing blackjack. 
 
-## Push your final code to [GitHub](https://github.com/FRS417-DataScienceBiologists)
+## Push your final code to GitHub!
+Please be sure that you check the `keep md` file in the knit preferences.  
