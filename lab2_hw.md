@@ -9,7 +9,7 @@ output:
 ---
 
 ## Instructions
-Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to our [GitHub repository](https://github.com/FRS417-DataScienceBiologists). I will randomly select a few examples of student work at the start of each session to use as examples so be sure that your code is working to the best of your ability.
+Answer the following questions and complete the exercises in RMarkdown. Please embed all of your code and push your final work to your repository. Your final lab report should be organized, clean, and run free from errors. Remember, you must remove the `#` for the included code chunks to run.  
 
 ## Load the tidyverse
 
@@ -18,11 +18,7 @@ library("tidyverse")
 ```
 
 ```
-## Warning: package 'tidyverse' was built under R version 3.5.2
-```
-
-```
-## ── Attaching packages ──────────── tidyverse 1.3.0 ──
+## ── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
@@ -33,35 +29,7 @@ library("tidyverse")
 ```
 
 ```
-## Warning: package 'ggplot2' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'tibble' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'tidyr' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'purrr' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'dplyr' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'stringr' was built under R version 3.5.2
-```
-
-```
-## Warning: package 'forcats' was built under R version 3.5.2
-```
-
-```
-## ── Conflicts ─────────────── tidyverse_conflicts() ──
+## ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 ```
@@ -98,10 +66,7 @@ msleep
 ?msleep
 ```
 
-
-
 2. Put these data into a new object `sleep`. Make sure they are organized as a data frame.  
-
 
 ```r
 sleep <- data.frame(msleep)
@@ -279,7 +244,6 @@ sleep
 ## 83         <NA>         9.8       2.4   0.3500000 14.20 0.05040    4.230
 ```
 
-
 3. Show a list of the column names is this data frame.
 
 ```r
@@ -292,22 +256,7 @@ colnames(sleep)
 ## [11] "bodywt"
 ```
 
-```r
-rownames(sleep)
-```
-
-```
-##  [1] "1"  "2"  "3"  "4"  "5"  "6"  "7"  "8"  "9"  "10" "11" "12" "13" "14" "15"
-## [16] "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29" "30"
-## [31] "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44" "45"
-## [46] "46" "47" "48" "49" "50" "51" "52" "53" "54" "55" "56" "57" "58" "59" "60"
-## [61] "61" "62" "63" "64" "65" "66" "67" "68" "69" "70" "71" "72" "73" "74" "75"
-## [76] "76" "77" "78" "79" "80" "81" "82" "83"
-```
-
-
 4. Use `glimpse()` to summarize the data in `sleep`.
-
 
 ```r
 glimpse(sleep)
@@ -329,9 +278,7 @@ glimpse(sleep)
 ## $ bodywt       <dbl> 50.000, 0.480, 1.350, 0.019, 600.000, 3.850, 20.490, 0.0…
 ```
 
-
 5. Use `summary()` to summarize the data in `sleep`.
-
 
 ```r
 summary(sleep)
@@ -364,9 +311,7 @@ summary(sleep)
 ##                  NA's   :27
 ```
 
-
 6. Print out the first column of the data frame and then print out the first row.
-
 
 ```r
 print(sleep[,1])
@@ -428,12 +373,11 @@ sleep[1,]
 ## 1          NA  11.9      NA     50
 ```
 
-
 7. We are interested in two groups; small and large mammals. Let's define small as less than or equal to 1kg body weight and large as greater than or equal to 200kg body weight. Make two new dataframes (large and small) based on these parameters.  
-
 
 ```r
 bodywt <- sleep[,11]
+
 small <- filter(sleep, bodywt<= 1) 
 large <- filter(sleep, bodywt>= 200)
 small
@@ -542,7 +486,6 @@ large
 
 8. What is the mean weight for both the large and small mammals?
 
-
 ```r
 mean(small$bodywt)
 ```
@@ -561,7 +504,6 @@ mean(large$bodywt)
 
 
 9. Let's try to figure out if large mammals sleep, on average, longer than small mammals. What is the average sleep duration for large mammals as we have defined them?
-
 
 ```r
 mean(large$sleep_total)
@@ -590,7 +532,6 @@ mean(small$sleep_total)> mean(large$sleep_total)
 
 10. What is the average sleep duration for small mammals as we have defined them?
 
-
 ```r
 mean(small$sleep_total, na.rm = TRUE)
 ```
@@ -598,7 +539,6 @@ mean(small$sleep_total, na.rm = TRUE)
 ```
 ## [1] 12.65833
 ```
-
 
 11. Which animals are the sleepiest? Which sleep least 18 hours per day?  
 
@@ -647,7 +587,8 @@ filter(sleep, sleep_total>=18)
 ## 4        19.9       2.0   0.2000000   4.1 0.00025  0.010
 ## 5        18.1       6.1          NA   5.9 0.08100 60.000
 ```
-##row 43 (little brown rat) is the sleepiest at 19.9 hours per day.
+
+##row 43 (little brown bat) is the sleepiest at 19.9 hours per day.
 
 ```r
 sleep[43,6]
@@ -676,6 +617,5 @@ sleep[43,]
 #rows 20,22,37,43,62 => North American Opossum, Big Brown Bat, Thick-tailed Opposum, Little Brown Bat, and Giant Armadillo.
 #=====> all sleep more then 18 hours per day on average.   
 
-
-
-## Push your final code to GitHub
+## Push your final code to GitHub!
+Please be sure that you check the `keep md` file in the knit preferences.  
