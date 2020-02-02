@@ -4,9 +4,12 @@ author: "Please Add Your Name Here"
 date: "Winter 2020"
 output:
   html_document:
+    keep_md: yes
     theme: spacelab
-    toc: no
 ---
+```{r}
+getwd()
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -41,41 +44,125 @@ spec(homerange)
 ```{r}
 dim(homerange)
 ```
+
 ```{r}
 colnames(homerange)
 ```
+
 ```{r}
 summary(homerange)
 ```
 
+
 4. Are there NA's in your data? Show the code that you would use to verify this, please.  
 ```{r}
-is.na(homerange)
+anyNA(homerange)
 ```
 
 5. Change the class of the variables `taxon` and `order` to factors and display their levels.  
+
 ```{r}
-is.factor(homerange, taxon)
+class(homerange$taxon)
+class(homerange$order)
+```
+
+```{r}
+homerange$taxon <- as.factor(homerange$taxon)
+class(homerange$taxon)
+homerange$order <- as.factor(homerange$order)
+class(homerange$order)
+```
+
+```{r}
+levels(homerange$taxon)
+levels(homerange$order)
 ```
 
 
 6. Make a new dataframe `deer` that is limited to the mean mass, log10 mass, family, genus, and species of deer in the database. The family for deer is cervidae. Arrange the data in descending order by log10 mass. Which is the largest deer?  
+```{r}
+colnames(homerange)
+```
+
+```{r}
+deer<- homerange %>% 
+  select(mean.mass.g, log10.mass, family, genus, species) %>% 
+  filter(family == "cervidae") %>% 
+  arrange(desc(log10.mass))
+
+deer
+
+```
+
+
+##The largest deer is "alces alces""
 
 7. As measured by the data, which snake species has the smallest homerange? Show all of your work, please. Look this species up online and tell me about it!  
 
+```{r}
+levels(homerange$taxon)
+```
+
+```{r}
+funtubes <-
+homerange %>% 
+  filter(taxon == "snakes") %>% 
+  select(mean.hra.m2, family, genus, species) %>% 
+  arrange(mean.hra.m2)
+
+funtubes
+  
+```
+
+##Bitis schneideri is a venomous viper species found in a small coastal region that straddles the border between Namibia and South Africa. This is the smallest species in the genus Bitis and possibly the world's smallest viper.
 
 8. You suspect that homerange and mass are correlated in birds. We need a ratio that facilitates exploration of this prediction. First, build a new dataframe called `hra_ratio` that is limited to genus, species, mean.mass.g, log10.mass, log10.hra. Arrange it in ascending order by mean mass in grams.  
 
+```{r}
+hra_ratio <-
+  homerange %>% 
+  select(genus, species, mean.mass.g, log10.mass, log10.hra) %>% 
+  arrange(mean.mass.g)
+  
+hra_ratio
+```
 
 9. Replace the existing `hra_ratio` dataframe with a new dataframe that adds a column calculating the ratio of log 10 hra to log 10 mass. Call it `hra.mass.ratio`. Arrange it in descending order by mean mass in grams.  
 
+```{r}
+hra_ratio <-
+  hra_ratio %>% 
+  mutate(hra.mass.ratio = log10.hra/log10.mass) %>% 
+  arrange(desc(mean.mass.g))
+
+hra_ratio
+```
 
 10. What is the lowest mass for birds with a `hra.mass.ratio` greater than or equal to 4.0?
 
+```{r}
+homerange %>%
+  mutate(hra.mass.ratio = log10.hra/log10.mass) %>% 
+  filter(taxon == "birds" & hra.mass.ratio >= 4.0) %>% 
+  arrange(mean.mass.g) %>% 
+  select(taxon, genus, species, hra.mass.ratio, mean.mass.g)
+```
+##lowest mean mass(g) = 5.15g
 
-11. Do a search online; what is the common name of the bird from #8 above? Place a link in your markdown file that takes us to a webpage with information on its biology.  
+11. Do a search online; what is the common name of the bird from #8 above? Place a link in your markdown file that takes us to a webpage with information on its biology. 
 
-12. What is the `hra.mass.ratio` for an ostrich? Show your work, please.  
+##regulus regulus: goldcrest
+
+12. What is the `hra.mass.ratio` for an ostrich? Show your work, please. 
+
+```{r}
+homerange %>% 
+  mutate(hra.mass.ratio = log10.hra/log10.mass) %>% 
+  select(hra.mass.ratio, common.name) %>% 
+  filter(common.name == "ostrich")
+  
+```
+##hra mass ratio is 1.602565 for an ostrich. 
 
 ## Push your final code to GitHub!
 Please be sure that you have check the `keep md` file in the knit preferences.  
