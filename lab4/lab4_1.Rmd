@@ -27,6 +27,7 @@ The  quote sums above sums up much of the work in data science. Simply put, most
 - [tidyr `pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html)  
 - [pivoting](https://cran.r-project.org/web/packages/tidyr/vignettes/pivot.html)  
 
+
 ## Load the tidyverse
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -91,8 +92,8 @@ relig_income
 
 ```{r}
 relig_income %>% 
-  pivot_longer(-religion, 
-               names_to = "income",
+  pivot_longer(-religion,
+               names_to = "income", 
                values_to = "people")
 ```
 
@@ -152,9 +153,11 @@ plant_data
 3. Use `pivot_longer()` to make the data tidy. Focus the data only on genotype, day, and measurement.  
 ```{r}
 plant_data %>%
-  pivot_longer( cols= stats_with("day"),
-                names_to = "day"
-                values_to = "measurement"
+  pivot_longer( 
+               cols = starts_with("day"), 
+               names_to = "day",
+               names_prefix = "day",
+               values_to = "measurement")
 
   
 ```
@@ -206,20 +209,20 @@ heartrate2 %>%
 ## Practice
 1. Re-examine `heartrate2`. Use `separate()` for the sexes, `pivot_longer()` to tidy, and `arrange()` to organize by patient and drug. Store this as a new object `heartrate3`.  
 ```{r}
-heartrate3 <- heartrate2 %>% 
+heartrate3<-
+heartrate2 %>% 
   separate(patient, into= c("patient", "sex"), sep = "_") %>% 
   pivot_longer(a:d, 
-               names_to = "drug",
-               values_to = "heartrate") %>%
-  arrange(heartrate)
-  
+               names_to= "drug", 
+               values_to= "heartrate") %>% 
+  arrange(patient, drug)
 heartrate3
 ```
 
 2. `unite()` is the opposite of separate(). Its syntax is straightforward. You only need to give a new column name and then list the columns to combine with a separation character.  Give it a try below by recombining patient and sex from `heartrate3`.  
 ```{r}
-heartrate3 %>% 
-unite(c(patient, sex), into= "patient" )
+heartrate3 %>%
+  unite("patient", patient:sex, sep = "-")
 ```
 
 
