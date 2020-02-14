@@ -103,6 +103,19 @@ homerange %>%
 
 ## Practice
 1. Make a barplot that shows locomotion type by `primarymethod`. Try both a stacked barplot and `position="dodge"`.
+```{r}
+homerange %>% 
+  ggplot(aes(x=locomotion, fill= primarymethod))+
+  geom_bar(position= "dodge")+
+  coord_flip()
+
+homerange %>% 
+  ggplot(aes(x=locomotion, fill= primarymethod))+
+  geom_bar()+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+  
+```
+
 
 
 ## Histograms and Density Plots
@@ -112,7 +125,7 @@ What does the distribution of body mass look like in the homerange data?
 ```{r}
 homerange %>% 
   ggplot(aes(x = log10.mass)) +
-  geom_histogram(alpha = 0.6, color = "black")+
+  geom_histogram(alpha = 0.6, color = "black", fill = "green")+
   labs(title = "Distribution of Body Mass")
 ```
 
@@ -120,7 +133,7 @@ homerange %>%
 ```{r}
 homerange %>% 
   ggplot(aes(x = log10.mass)) +
-  geom_density(fill="steelblue", alpha  =0.6, color = "black")+
+  geom_density(fill="red", alpha  =0.6, color = "black")+
   labs(title = "Distribution of Body Mass")
 ```
 
@@ -135,13 +148,29 @@ homerange %>%
 
 ## Practice
 1. Make a histogram of `log10.hra`. Make sure to add a title.
+```{r}
+homerange %>% 
+  ggplot(aes(x= log10.hra))+
+  geom_histogram(color="black")
+```
 
 
 2. Now plot the same variable using `geom_density()`.
-
+homerange %>% 
+ 
+```{r}
+homerange %>% 
+  ggplot(aes(x= log10.hra))+
+  geom_density(color="black")
+```
 
 3. Combine them both!
 
+```{r}
+homerange %>% 
+  ggplot(aes(x= log10.hra))+
+  geom_histogram(aes(y= ..density.., color = "blue"), color= "red")
+```
 
 ## Create Categories with mutate and case_when()
 `case_when()` is a very handy function from `dplyr` which allows us to calculate a new variable from other variables. We use `case_when()` within `mutate()` to do this.`case_when()` allows us to specify multiple conditions. Let's reclassify the body mass variable into a new factor variable with small, medium, and large animals. 
@@ -150,6 +179,8 @@ homerange <- homerange %>%
              mutate(mass_category = case_when(log10.mass <= 1.75 ~ "small",
                                               log10.mass > 1.75 & log10.mass <= 2.75 ~ "medium",
                                               log10.mass > 2.75 ~ "large"))
+
+homerange
 ```
 
 Here we check how the newly created body mass categories compare across trophic guild. 
@@ -165,6 +196,20 @@ homerange %>%
 
 ## Practice
 1. Use case_when() to make a new column `range_category` that breaks down `log10.hra` into very small, small, medium, and large classes based on quartile.
+
+```{r}
+summary(homerange)
+```
+
+
+```{r}
+homerange<- homerange %>% 
+  mutate(range_category= case_when(log10.hra>= -1.523 & log10.hra<= 3.653 ~ "vsmall",
+                                              log10.hra >3.653 & log10.hra<= 4.495 ~ "small", log10.hra> 4.495 & log10.hra <= 6.016 ~ "medium", log10.hra> 6.016 & log10.hra<= 9.55 ~ "large"
+    
+  ))
+homerange
+```
 
 2. How many and which taxonomic classes are represented in each of the `range_category` classes?
 
