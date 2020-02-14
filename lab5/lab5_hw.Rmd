@@ -3,9 +3,9 @@ title: "Lab 5 Homework"
 author: "David Galkowski"
 date: "2/13/20"
 output:
-  html_document:
+  html_document: 
+    keep_md: yes
     theme: spacelab
-    toc: no
 ---
 
 ```{r setup, include=FALSE}
