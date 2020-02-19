@@ -19,8 +19,8 @@ In the last section we practiced wrangling untidy data using `tidyr`. We also le
 
 ## Install `naniar` and `skimr`
 ```{r}
-#install.packages("naniar")
-#install.packages("skimr")
+install.packages("naniar")
+install.packages("skimr")
 ```
 
 ## Load the libraries
@@ -45,7 +45,6 @@ life_history
 ```
 
 2. What are the possible problems if missing data are indicated by "-999.0" or "0"?
-
 
 ## For the following examples, we will use the built-in `msleep` data
 ```{r}
@@ -205,7 +204,7 @@ life_history %>%
 ## Visualizing NAs
 There is another package `visdat` that can be used to visualize the proportion of different classes of data, including missing data.
 ```{r}
-#install.packages("vidat)
+install.packages("visdat")
 library(visdat)
 ```
 
