@@ -18,6 +18,7 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 ## Libraries
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+install.packages("gapminder")
 ```
 
 ## Resources
