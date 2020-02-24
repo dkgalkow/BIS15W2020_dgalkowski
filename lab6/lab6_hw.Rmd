@@ -1,6 +1,6 @@
 ---
 title: "Lab 6 Homework"
-author: "Please Add Your Name Here"
+author: "David Galkowski"
 date: "Please Add the Date Here"
 output:
   html_document: 
@@ -18,7 +18,7 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 ## Libraries
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-install.packages("gapminder")
+#install.packages("gapminder")
 ```
 
 ## Resources
@@ -41,24 +41,25 @@ The questions below are open-ended and have many possible solutions. Your approa
 gapminder <- gapminder
 ```
 
-
 ```{r}
 gapminder %>% 
-  colnames() 
+  colnames()
+```
+
+```{r}
 gapminder
-
 ```
 
 ```{r}
 gapminder %>% 
-summarize(na_gapminder = sum(is.na(gapminder)))
+  summarize(na_gapminder = sum(is.na(gapminder)))
 ```
-
 
 ```{r}
 gapminder %>% 
   naniar::miss_var_summary()
 ```
+
 ```{r}
 gapminder
 ```
@@ -77,14 +78,21 @@ gapminder %>%
   group_by(year) %>% 
   summarize(le_global= mean(lifeExp)) %>% 
   ggplot(aes(x=year, y=le_global))+
-  geom_point()##as a mean of the countries' life expectancy.
+  geom_point() + ##as a mean of the countries' life expectancy.
+  geom_line() # it might be helpful to add a line to see the trend
 ```
 
-
-
-
-
 **3. How do the distributions of life expectancy compare for the years 1952 and 2007? _Challenge: Can you put both distributions on a single plot?_**
+
+Have a look here; by plotting both of these as density distributions you can see that there has been a big shift.
+```{r}
+gapminder %>% 
+  filter(year==1952 | year==2007) %>% 
+  mutate(year=as.factor(year)) %>% 
+  ggplot(aes(x=lifeExp, group=year, fill=year))+
+  geom_density(alpha=0.5)
+```
+
 ```{r}
 gapminder %>%
   filter(year== 1952 | year== 2007) %>% 
@@ -94,12 +102,22 @@ gapminder %>%
 ```
 
 
-**4. Your answer above doesn't tell the whole story since life expectancy varies by region. Make a summary that shows the min, mean, and max life expectancy by continent for all years represented in the data.**
+**4. Your answer above doesn't tell the whole story since life expectancy varies by region. Make a summary that shows the min, mean, and max life expectancy by continent for all years represented in the data.**  
 
+I suggest adding a numerical summary and a graphical visualization whenever possible.
 ```{r}
 gapminder %>% 
-  ggplot(aes(x=continent, y=lifeExp, fill= year))+
-  geom_boxplot()
+  group_by(continent, year) %>% 
+  summarize(min=min(lifeExp),
+            mean=mean(lifeExp),
+            max=max(lifeExp))
+```
+
+If you fill by continent you get a nice color-coded key.
+```{r}
+gapminder %>% 
+  ggplot(aes(x=continent, y=lifeExp, fill=continent))+
+  geom_boxplot(alpha=0.8)
 ```
 
 ```{r}
@@ -109,8 +127,6 @@ gapminder %>%
             mean_le= mean(lifeExp),
             max_le= max(lifeExp))
 ```
-
-
 
 **5. How has life expectancy changed between 1952-2007 for each continent? Try using `geom_line()` for this, including all continents on the same  plot.**
 ```{r}
@@ -122,8 +138,18 @@ gapminder %>%
   geom_line()
 ```
 
-
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
+
+A scatterplot will give you a better idea of the relationship.
+```{r}
+gapminder %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+  geom_point()+
+  labs(title = "GDP vs. Life Expectancy",
+       x = "GDP per capita",
+       y = "Life expectancy")
+```
+
 
 ```{r}
 gapminder %>% 
@@ -136,6 +162,17 @@ gapminder %>%
 **7. There is extreme disparity in per capita GDP. Rescale the x axis to make this easier to interpret. How would you characterize the relationship?**
 
 ```{r}
+gapminder %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp))+
+  geom_point()+
+  scale_x_log10()+
+  geom_smooth(method=lm, se=F)+
+  labs(title = "GDP vs. Life Expectancy",
+       x = "GDP per capita (log 10)",
+       y = "Life expectancy")
+```
+
+```{r}
 gapminder %>% 
   group_by(year) %>%
   summarise(gdp_av= mean(gdpPercap), av_le= mean(lifeExp)) %>% 
@@ -145,14 +182,17 @@ gapminder %>%
 ```
 
 
-**8. Which countries have had the largest population growth since 1952?**
+**8. Which countries have had the largest population growth since 1952?**  
+china,india,US, and Indonesia have grown the most. 
 ```{r}
 gapminder %>% 
   group_by(country) %>% 
   summarise(popchng = max(pop)-min(pop)) %>% 
   arrange(desc(popchng)) %>%
   filter(popchng>= 133408087)
+```
 
+```{r}
 gapminder %>% 
   group_by(country) %>% 
   summarise(popchng = max(pop)-min(pop)) %>% 
@@ -162,12 +202,7 @@ gapminder %>%
   geom_bar(stat = "identity")+
   coord_flip()+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
-  
- 
-  
-  ##china,india,US, and Indonesia have grown the most. 
 ```
-
 
 **9. Use your results from the question above to plot population growth for the top five countries since 1952.**
 ```{r}
@@ -183,15 +218,15 @@ gapminder %>%
 ```
 
 
-**10. How does per capita GDP growth compare between these same five countries?**
+**10. How does per capita GDP growth compare between these same five countries?**  
 ```{r}
 gapminder %>% 
   filter(country == "India" | country == "China" | country == "United States" | country == "Indonesia") %>% 
   group_by(country) %>% 
   summarise(gdpchng= last(gdpPercap)- first(gdpPercap)) 
+```
 
-
-
+```{r}
 gapminder %>% 
   filter(country == "India" | country == "China" | country == "United States" | country == "Indonesia") %>% 
   group_by(country) %>% 
@@ -200,11 +235,7 @@ gapminder %>%
   geom_bar(stat= "identity")+
   coord_flip()+
   theme(axis.text.x = element_text(angle=60, hjust= 1))
-  
-  
 ```
-
-
 
 ## Push your final code to GitHub!
 Please be sure that you check the `keep md` file in the knit preferences. 
