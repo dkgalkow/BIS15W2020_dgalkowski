@@ -1,17 +1,16 @@
 ---
 title: "Lab 7 Homework"
-author: "Please Add Your Name Here"
+author: "David Galkowski"
 date: "`r Sys.Date()`"
 output:
-<<<<<<< HEAD
   html_document: 
     keep_md: yes
     theme: spacelab
-=======
   html_document:
     theme: spacelab
     toc: no
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -39,7 +38,10 @@ UC_admit
 **1. Use the function(s) of your choice to get an idea of the overall structure of the data frame, including its dimensions, column names, variable classes, etc. As part of this, determine if there are NA's and how they are treated.**  
 
 
+
+
 ##There are more NA when I pivot wider to split "Category" into 3 separate variables.
+
 ```{r}
 UC_admit %>% 
 summarise(na = sum(is.na(UC_admit)))
@@ -47,6 +49,7 @@ summarise(na = sum(is.na(UC_admit)))
 
 
 **2. The president of UC has asked you to build a shiny app that shows admissions by ethnicity across all UC campuses. Your app should allow users to explore year, campus, and admit category as interactive variables. Use shiny dashboard and try to incorporate the aesthetics you have learned in ggplot to make the app neat and clean.**
+
 
 ```{r}
 
@@ -96,11 +99,6 @@ server <- function(input, output, session) {
 
 shinyApp(ui, server)
 ```
-
-
-
-**2. The president of UC has asked you to build a shiny app that shows admissions by ethnicity across all UC campuses. Your app should allow users to explore year, campus, and admit category as interactive variables. Use shiny dashboard and try to incorporate the aesthetics you have learned in ggplot to make the app neat and clean.**
-
 
 
 **3. Make alternate version of your app above by tracking enrollment at a campus over all of the represented years while allowing users to interact with campus, category, and ethnicity.**
