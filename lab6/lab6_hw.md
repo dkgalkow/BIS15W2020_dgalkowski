@@ -17,6 +17,7 @@ Answer the following questions and complete the exercises in RMarkdown. Please e
 
 ```r
 library(tidyverse)
+#install.packages("gapminder")
 ```
 
 ## Resources
@@ -42,15 +43,15 @@ gapminder <- gapminder
 ```
 
 
-
 ```r
 gapminder %>% 
-  colnames() 
+  colnames()
 ```
 
 ```
 ## [1] "country"   "continent" "year"      "lifeExp"   "pop"       "gdpPercap"
 ```
+
 
 ```r
 gapminder
@@ -76,7 +77,7 @@ gapminder
 
 ```r
 gapminder %>% 
-summarize(na_gapminder = sum(is.na(gapminder)))
+  summarize(na_gapminder = sum(is.na(gapminder)))
 ```
 
 ```
@@ -85,7 +86,6 @@ summarize(na_gapminder = sum(is.na(gapminder)))
 ##          <int>
 ## 1            0
 ```
-
 
 
 ```r
@@ -104,6 +104,7 @@ gapminder %>%
 ## 5 pop            0        0
 ## 6 gdpPercap      0        0
 ```
+
 
 ```r
 gapminder
@@ -136,7 +137,7 @@ gapminder %>%
   geom_jitter()##for every country
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
 
 
 ```r
@@ -144,10 +145,11 @@ gapminder %>%
   group_by(year) %>% 
   summarize(le_global= mean(lifeExp)) %>% 
   ggplot(aes(x=year, y=le_global))+
-  geom_point()##as a mean of the countries' life expectancy.
+  geom_point() + ##as a mean of the countries' life expectancy.
+  geom_line() # it might be helpful to add a line to see the trend
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
 
 
 
@@ -163,7 +165,7 @@ gapminder %>%
   coord_flip()
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 
 **4. Your answer above doesn't tell the whole story since life expectancy varies by region. Make a summary that shows the min, mean, and max life expectancy by continent for all years represented in the data.**
@@ -175,7 +177,7 @@ gapminder %>%
   geom_boxplot()
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
 
 
 ```r
@@ -210,7 +212,7 @@ gapminder %>%
   geom_line()
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-13-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
 
 
 **6. We are interested in the relationship between per capita GDP and life expectancy; i.e. does having more money help you live longer?**
@@ -224,7 +226,7 @@ gapminder %>%
   geom_line()
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
 
 **7. There is extreme disparity in per capita GDP. Rescale the x axis to make this easier to interpret. How would you characterize the relationship?**
 
@@ -238,7 +240,7 @@ gapminder %>%
   scale_x_log10()
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-15-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
 
 
 **8. Which countries have had the largest population growth since 1952?**
@@ -274,7 +276,7 @@ gapminder %>%
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-16-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
 
 ```r
   ##china,india,US, and Indonesia have grown the most. 
@@ -295,7 +297,7 @@ gapminder %>%
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-17-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
 
 
 **10. How does per capita GDP growth compare between these same five countries?**
@@ -328,7 +330,7 @@ gapminder %>%
   theme(axis.text.x = element_text(angle=60, hjust= 1))
 ```
 
-![](lab6_hw_files/figure-html/unnamed-chunk-18-1.png)<!-- -->
+![](lab6_hw_files/figure-html/unnamed-chunk-19-1.png)<!-- -->
 
 
 
