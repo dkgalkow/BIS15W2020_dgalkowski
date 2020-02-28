@@ -89,7 +89,9 @@ gapminder %>%
   filter(year== 1952 | year== 2007) %>% 
   ggplot(aes(x=country, y= lifeExp, fill= year))+
   geom_bar(stat= "identity")+
-  coord_flip()
+  coord_flip()+
+  theme(axis.text.x = element_text(angle=60, hjust= 1))
+  
 ```
 
 
@@ -129,7 +131,7 @@ gapminder %>%
   group_by(year) %>%
   summarise(gdp_av= mean(gdpPercap), Le_av= mean(lifeExp)) %>% 
   ggplot(aes(x= gdp_av, y= Le_av, color= year))+
-  geom_line()
+  geom_point()
 ```
 
 **7. There is extreme disparity in per capita GDP. Rescale the x axis to make this easier to interpret. How would you characterize the relationship?**
